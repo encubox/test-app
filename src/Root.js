@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const fetch = function() {
@@ -6,27 +6,44 @@ const fetch = function() {
 };
 
 function Root() {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [dog, setDog] = useState({});
+  const [loadingDod, setLoadingDog] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [loadingUsers, setLoadingUsers] = useState(false);
 
-  return (
+  useEffect(async () => {
+    setLoadingDog(true);
+    const result = await axios("https://dog.ceo/api/breeds/image/random");
+    setDog(result.data);
+    setLoadingDog(false);
+  }, []);
+
+  return loadingDod ? (
+    <center>
+      <br />
+      ...loading dog...
+    </center>
+  ) : (
     <div style={{ padding: "0 30rem" }}>
       <br />
       <br />
       <center>
+        <img src={dog.message} alt="dog" />
+        <br />
+        <br />
         <button
           onClick={() => {
-            setLoading(true);
+            setLoadingUsers(true);
             axios
               .get(`https://jsonplaceholder.typicode.com/users`)
               .then(res => {
                 const persons = res.data;
                 // this.setState({ persons });
                 // alert(JSON.stringify(res.data, null, 2));
-                setData(res.data);
+                setUsers(res.data);
               })
               .finally(() => {
-                setLoading(false);
+                setLoadingUsers(false);
               });
           }}
         >
@@ -41,14 +58,14 @@ function Root() {
           rows={25}
         /> */}
       </center>
-      {loading ? (
+      {loadingUsers ? (
         <center>
           <br />
-          Loading...
+          ...loading users...
           <br />
         </center>
       ) : (
-        data.map(item => (
+        users.map(item => (
           <div key={item.id}>
             <br />
             <pre>{JSON.stringify(item, null, 2)}</pre>
