@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+function timeout(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 const fetch = function() {
   "https://dog.ceo/api/breeds/image/random";
 };
@@ -13,6 +17,7 @@ function Root() {
 
   useEffect(async () => {
     setLoadingDog(true);
+    await timeout(5 * 1000);
     const result = await axios("https://dog.ceo/api/breeds/image/random");
     setDog(result.data);
     setLoadingDog(false);
