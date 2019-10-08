@@ -43,8 +43,6 @@ function Root() {
               .get(`https://jsonplaceholder.typicode.com/users`)
               .then(res => {
                 const persons = res.data;
-                // this.setState({ persons });
-                // alert(JSON.stringify(res.data, null, 2));
                 setUsers(res.data);
               })
               .finally(() => {
@@ -54,14 +52,6 @@ function Root() {
         >
           Fetch
         </button>
-        {/* <br />
-        <br />
-        <textarea
-          value={JSON.stringify(data, null, 2)}
-          readOnly
-          cols={100}
-          rows={25}
-        /> */}
       </center>
       {loadingUsers ? (
         <center>
