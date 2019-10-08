@@ -17,7 +17,7 @@ function Root() {
 
   useEffect(async () => {
     setLoadingDog(true);
-    await timeout(5 * 1000);
+    await timeout(1 * 1000);
     const result = await axios("https://dog.ceo/api/breeds/image/random");
     setDog(result.data);
     setLoadingDog(false);
@@ -39,15 +39,17 @@ function Root() {
         <button
           onClick={() => {
             setLoadingUsers(true);
-            axios
-              .get(`https://jsonplaceholder.typicode.com/users`)
-              .then(res => {
-                const persons = res.data;
-                setUsers(res.data);
-              })
-              .finally(() => {
-                setLoadingUsers(false);
-              });
+            setTimeout(() => {
+              axios
+                .get(`https://jsonplaceholder.typicode.com/users`)
+                .then(res => {
+                  const persons = res.data;
+                  setUsers(res.data);
+                })
+                .finally(() => {
+                  setLoadingUsers(false);
+                });
+            }, 2 * 1000);
           }}
         >
           Fetch
